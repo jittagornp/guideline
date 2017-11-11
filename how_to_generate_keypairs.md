@@ -143,3 +143,6 @@ public class RSAPublicKeyReader {
     }
 }
 ```
+### ตัวอย่างการใช้งาน
+
+https://github.com/jittagornp/oauth2/blob/master/src/test/java/com/pamarin/oauth2/security/JwtSignerTest.java  
