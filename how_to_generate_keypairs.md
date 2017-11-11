@@ -29,7 +29,7 @@ $ openssl pkcs8 -topk8 -inform PEM -outform DER -in private-key.pem -out private
 $ openssl rsa -in private-key.pem -pubout -outform DER -out public-key.der
 ```
 
-ตอนนี้เรามี key file ทั้งหมด 4 file ได้แก้
+ตอนนี้เรามี key file ทั้งหมด 4 file ได้แก่
 
 - private-key.pem
 - private-key.der
