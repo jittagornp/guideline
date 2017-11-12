@@ -44,10 +44,11 @@ $ openssl rsa -in private-key.pem -pubout -outform DER -out public-key.der
 RSAPrivateKeyReader.java
 ```java
 /*
- * Copy right 2016 - 2017 Genius-Tree Co., Ltd.
+ * Copyright 2017 Pamarin.com
  */
-package th.co.geniustree.doss.sso.security;
+package com.pamarin.oauth2.security;
 
+import com.pamarin.oauth2.exception.RSAKeyReaderException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyFactory;
@@ -59,19 +60,21 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import th.co.geniustree.doss.sso.exception.RSAKeyReaderException;
 
 /**
- * @author jittagornp <http://jittagornp.me>
- * create : 2016/12/05
+ * @author jittagornp &lt;http://jittagornp.me&gt; create : 2017/11/11
  */
 @Component
-public class RSAPrivateKeyReader {
+class RSAPrivateKeyReaderImpl implements RSAPrivateKeyReader {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RSAPrivateKeyReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RSAPrivateKeyReaderImpl.class);
 
-    public RSAPrivateKey readFromDERFileInputStream(InputStream inputStream) {
+    @Override
+    public RSAPrivateKey readFromDERFile(InputStream inputStream) {
         try {
+            if (inputStream == null) {
+                throw new RSAKeyReaderException("Required inputStream.");
+            }
             byte[] keyBytes = IOUtils.toByteArray(inputStream);
             PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
@@ -95,10 +98,11 @@ public class RSAPrivateKeyReader {
 RSAPublicKeyReader.java
 ```java
 /*
- * Copy right 2016 - 2017 Genius-Tree Co., Ltd.
+ * Copyright 2017 Pamarin.com
  */
-package th.co.geniustree.doss.sso.security;
+package com.pamarin.oauth2.security;
 
+import com.pamarin.oauth2.exception.RSAKeyReaderException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyFactory;
@@ -110,21 +114,22 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import th.co.geniustree.doss.sso.exception.RSAKeyReaderException;
 
 /**
- * @author jittagornp <http://jittagornp.me>
- * create : 2016/12/05
+ * @author jittagornp &lt;http://jittagornp.me&gt; create : 2017/11/11
  */
 @Component
-public class RSAPublicKeyReader {
+class RSAPublicKeyReaderImpl implements RSAPublicKeyReader {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RSAPublicKeyReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RSAPublicKeyReaderImpl.class);
 
-    public RSAPublicKey readFromDERFileInputStream(InputStream inputStream) {
+    @Override
+    public RSAPublicKey readFromDERFile(InputStream inputStream) {
         try {
+            if (inputStream == null) {
+                throw new RSAKeyReaderException("Required inputStream.");
+            }
             byte[] keyBytes = IOUtils.toByteArray(inputStream);
-
             X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             return (RSAPublicKey) kf.generatePublic(spec);
@@ -141,6 +146,7 @@ public class RSAPublicKeyReader {
             }
         }
     }
+
 }
 ```
 ### ตัวอย่างการใช้งาน
