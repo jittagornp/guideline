@@ -41,7 +41,7 @@ $ openssl rsa -in private-key.pem -pubout -outform DER -out public-key.der
 ส่วน `.der` เราจะเอามาใช้ใน java ของเรา
 
 # Example Code
-RSAPrivateKeyReader.java
+RSAPrivateKeyReaderImpl.java
 ```java
 /*
  * Copyright 2017 Pamarin.com
@@ -95,7 +95,7 @@ class RSAPrivateKeyReaderImpl implements RSAPrivateKeyReader {
 
 }
 ```
-RSAPublicKeyReader.java
+RSAPublicKeyReaderImpl.java
 ```java
 /*
  * Copyright 2017 Pamarin.com
